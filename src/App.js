@@ -4,7 +4,8 @@ import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { Fragment, useEffect } from "react";
 import Notification from "./components/UI/Notification";
-import { sendCartData } from "./store/cart-slice";
+import { fetchCartData } from "./store/cart-actions";
+import { sendCartData } from "./store/cart-actions";
 
 let isInitial = true;
 
@@ -18,7 +19,11 @@ function App() {
 	// 	"https://react-redux-79289-default-rtdb.europe-west1.firebasedatabase.app/cart.json";
 
 	useEffect(() => {
-		//Comment sendCartData functionality from App.js useEffect and use the action creator from cart-slice.js
+		dispatch(fetchCartData());
+	}, [dispatch]);
+
+	useEffect(() => {
+		//Commented sendCartData functionality from App.js useEffect and use the action creator from cart-slice.js
 
 		// const sendCartData = async () => {
 		// dispatch(
@@ -59,8 +64,9 @@ function App() {
 		// 		}),
 		// 	);
 		// });
-
-		dispatch(sendCartData(cart));
+		if (cart.changed) {
+			dispatch(sendCartData(cart));
+		}
 	}, [cart, dispatch]);
 	return (
 		<Fragment>
