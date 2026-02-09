@@ -4,6 +4,7 @@ import { cartActions } from "../../store/cart-slice";
 
 const CartItem = (props) => {
 	const { id, title, quantity, total, price } = props.item;
+	console.log("🚀 ~ CartItem ~ quantity:", quantity);
 	const dispatch = useDispatch();
 
 	const addItemHandler = () => {
@@ -25,13 +26,14 @@ const CartItem = (props) => {
 			<header>
 				<h3>{title}</h3>
 				<div className={classes.price}>
-					${total.toFixed(2)}{" "}
-					<span className={classes.itemprice}>(${price.toFixed(2)}/item)</span>
+					${(Number(total) || 0).toFixed(2)}{" "}
+					<span className={classes.itemprice}>(
+						${(Number(price) || 0).toFixed(2)}/item)</span>
 				</div>
 			</header>
 			<div className={classes.details}>
 				<div className={classes.quantity}>
-					x <span>{quantity}</span>
+					x <span>{Number(quantity) || 0}</span>
 				</div>
 				<div className={classes.actions}>
 					<button onClick={removeItemHandler}>-</button>
